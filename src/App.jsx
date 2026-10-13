@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import BoardRoom from "./BoardRoom";
 import ChatPanel from "./Chatpanel";
 
-const ROOMS_API = "http://localhost:8080/api/rooms";
+const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || "http://localhost:8080").replace(/\/$/, "");
+const ROOMS_API = `${BACKEND_URL}/api/rooms`;
 
 async function responseError(response, fallback) {
   try {

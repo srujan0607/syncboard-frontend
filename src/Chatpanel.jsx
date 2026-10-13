@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Client } from "@stomp/stompjs";
 
-const BACKEND_URL = "http://localhost:8080";
+const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || "http://localhost:8080").replace(/\/$/, "");
 
 function mergeMessages(messages) {
   const unique = new Map();
@@ -29,7 +29,7 @@ export default function ChatPanel({ room, name }) {
     let pendingMessages = [];
 
     const client = new Client({
-      brokerURL: "ws://localhost:8080/ws",
+      brokerURL: `${BACKEND_URL.replace(/^http/, "ws")}/ws`,
       reconnectDelay: 5000,
 
       onConnect: () => {

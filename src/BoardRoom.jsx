@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Client } from "@stomp/stompjs";
 
-const BACKEND_URL = "http://localhost:8080";
+const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || "http://localhost:8080").replace(/\/$/, "");
 
 function paintEvent(canvas, event) {
   if (!canvas || !event) return;
@@ -197,7 +197,7 @@ if (event.type === "redo") {
     let pendingEvents = [];
 
     const client = new Client({
-      brokerURL: "ws://localhost:8080/ws",
+      brokerURL: `${BACKEND_URL.replace(/^http/, "ws")}/ws`,
       reconnectDelay: 5000,
 
       onConnect: () => {
